@@ -3,6 +3,7 @@ package com.example.uas_p3b;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements MainUI, View.OnCl
     @Override
     public void loginBerhasil(String token) {
         Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+        intent.putExtra("token",token);
+        MainActivity.this.startActivity(intent);
+
     }
 
     @Override
