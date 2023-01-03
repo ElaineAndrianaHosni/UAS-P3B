@@ -15,6 +15,7 @@ import com.example.uas_p3b.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity implements MainUI, View.OnClickListener {
     private ActivityMainBinding binding;
     private MainPresenter mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainUI, View.OnCl
     public void onClick(View view) {
         if(view==binding.btnLogin){
             mp.Login(binding.etEmail.getText().toString(),binding.etPassword.getText().toString(),binding.etRole.getText().toString());
+
         }
     }
 
@@ -48,5 +50,21 @@ public class MainActivity extends AppCompatActivity implements MainUI, View.OnCl
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void disabledInput() {
+        binding.btnLogin.setEnabled(false);
+        binding.etEmail.setEnabled(false);
+        binding.etPassword.setEnabled(false);
+        binding.etRole.setEnabled(false);
+    }
+
+    @Override
+    public void enabledInput() {
+        binding.btnLogin.setEnabled(true);
+        binding.etEmail.setEnabled(true);
+        binding.etPassword.setEnabled(true);
+        binding.etRole.setEnabled(true);
     }
 }

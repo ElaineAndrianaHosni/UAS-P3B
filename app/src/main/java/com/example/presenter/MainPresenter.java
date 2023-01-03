@@ -33,6 +33,7 @@ public class MainPresenter  {
     }
 
     public void Login(String email, String password, String role){
+        this.ui.disabledInput();
         User loginUser = new User(email,password,role);
         this.prosesLoginAPI(this.gson.toJson(loginUser));
 
@@ -89,6 +90,7 @@ public class MainPresenter  {
                 res = "Email atau Password atau Role anda salah";
             }
         }
+        this.ui.enabledInput();
         this.ui.loginGagal(res);
     }
 }
