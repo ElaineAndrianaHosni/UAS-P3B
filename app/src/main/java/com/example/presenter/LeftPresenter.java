@@ -13,7 +13,7 @@ public class LeftPresenter {
     public LeftPresenter(LeftUI leftUI) {
         this.leftUI = leftUI;
         this.list=new LinkedList<>();
-        String[] arr={"Pengumuman","Pertemuan","FRS","Exit"};
+        String[] arr={"Pengumuman","Pertemuan","FRS","Keluar"};
         this.loadData(arr);
     }
     public void changeListener(String page){

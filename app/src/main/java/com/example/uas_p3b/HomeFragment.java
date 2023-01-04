@@ -18,6 +18,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = HomeFragmentBinding.inflate(inflater,container,false);
         binding.pengumuman.setOnClickListener(this);
+        binding.keluar.setOnClickListener(this);
         return binding.getRoot();
     }
 
@@ -25,6 +26,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if(view==binding.pengumuman){
             changePage("pengumuman");
+        }else if(view==binding.keluar){
+            this.getParentFragmentManager().setFragmentResult("closeApp",new Bundle());
         }
     }
     private void changePage(String page){

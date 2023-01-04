@@ -79,4 +79,9 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
         this.moveTaskToBack(true);
         this.finish();
     }
+
+    @Override
+    public String getToken() {
+        return null;
+    }
 }
