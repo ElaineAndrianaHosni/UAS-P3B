@@ -13,9 +13,14 @@ public interface PengumumanUI {
     public Activity getAct();
     public void setFilter(String Filter);
     public String getTitle();
+    public String getToken();
+    public void menampilkanError(String error);
+    public void setVisibleBtnNext(boolean visible);
     public void loadingAdapter();
+    public void backAdapter();
     //untuk mengupdate smua list yang ada
     public void updateList(List<Pengumuman> list);
     //buat manggil kom antara fragment
     public void listenerOnClick (int pos);
+    public void reloadAdapter();
 }

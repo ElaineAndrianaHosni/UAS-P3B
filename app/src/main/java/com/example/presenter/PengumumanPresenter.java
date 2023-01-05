@@ -3,11 +3,15 @@ package com.example.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.lights.LightState;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -15,9 +19,13 @@ import com.example.contract.PengumumanUI;
 import com.example.model.Config;
 import com.example.model.Pengumuman;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,6 +39,7 @@ public class PengumumanPresenter {
     private final static String announcementsURL = Config.BASE_URL + "announcements";
     private SharedPreferences sp;
     private Gson gson;
+    private String next;
 
     public PengumumanPresenter(PengumumanUI ui) {
         this.ui = ui;
@@ -40,8 +49,10 @@ public class PengumumanPresenter {
         this.checkTagId = new LinkedList<>();
         this.sp = this.ui.getAct().getPreferences(Context.MODE_PRIVATE);
         this.ambilTags();
+        this.callAPI(false);
     }
-    public void callAPI(String Base_URL,boolean isCursor){
+    public void callAPI(boolean isCursor){
+        String Base_URL=announcementsURL;
         if(!isCursor){
             Base_URL+="?filter[title]="+this.ui.getTitle();
             if(checkTagId.size()!=0){
@@ -49,10 +60,15 @@ public class PengumumanPresenter {
                     Base_URL+="&filter[tags][]="+checkTagId.get(i);
                 }
             }
+        }else{
+            Base_URL+="?cursor="+next;
         }
+
+//        Log.d("base_url", Base_URL);
 //        Toast.makeText(getActivity(),Base_URL,Toast.LENGTH_LONG).show();
         this.ui.loadingAdapter();
         RequestQueue queue = Volley.newRequestQueue(this.ui.getLayout().getContext());
+        //request base url hasilnya onResponse/errorResponse
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 Base_URL, new Response.Listener<String>() {
             @Override
@@ -73,15 +89,47 @@ public class PengumumanPresenter {
                 }
             }
         }){
+            //si base url butuh auth, ini metod buat auth
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer ");
+                map.put("Authorization","Bearer "+ui.getToken());
                 return map;
             }
         };
         queue.add(stringRequest);
     }
+    public void memprosesKeluaranBerhasil(String response) throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+        //hasil dari respon ada "metadata" di dalemnya dan di dlm meta data ada next
+        Object object = jsonObject.getJSONObject("metadata").get("next");
+        //kalau next tidak ketemu, visible = false
+        this.ui.setVisibleBtnNext(!object.equals(null));
+        if(!object.equals(null)){
+            next = object.toString();
+        }
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        list = gson.fromJson(jsonArray.toString(),new TypeToken<ArrayList<Pengumuman>>(){}.getType());
+        this.ui.backAdapter();
+        this.ui.updateList(list);
+    }
+    public void memprosesKeluaranGagal(VolleyError error) throws JSONException{
+        String res="";
+        if(error instanceof NoConnectionError){
+            res="Tidak ada koneksi internet";
+        }else if(error instanceof TimeoutError){
+            res="Server memakan waktu lama untuk merespon\nCoba Lagi!";
+        }
+        else{
+            String jsonKeluaran = new String(error.networkResponse.data);
+            JSONObject jsonObject = new JSONObject(jsonKeluaran);
+            res = jsonObject.get("errcode").toString();
+
+        }
+        this.ui.menampilkanError(res);
+
+    }
+
     public void ambilTags(){
 //        if(sp.contains("checkTag")){
         if(sp.getString("checkTag","").equals("")){
@@ -101,5 +149,11 @@ public class PengumumanPresenter {
         }
 
 //        }
+    }
+    public void refresh(){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
+        editor.apply();
+        ambilTags();
     }
 }
