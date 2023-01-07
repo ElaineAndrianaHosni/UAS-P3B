@@ -26,6 +26,7 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
     private PengumumanBinding binding;
     private PengumumanAdapter adapter;
     private PengumumanPresenter presenter;
+    //token buat get apinya
     private String token;
 
     public PengumumanFragment(String token) {
@@ -125,12 +126,16 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
     public void listenerOnClick(String id) {
         Bundle bundle = new Bundle();
         bundle.putString("id",id);
+        //pengumumanui msk ke detail pengumuman fragment buat ngejalanin metod" ui di detail
+        //id string lewat args soalnya untuk kelas pengumuman ga bs msk ke bundle. krn gaada fragment put
         DetailPengumumanFragment detailPengumumanFragment = new DetailPengumumanFragment(this);
         detailPengumumanFragment.setArguments(bundle);
         FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
         detailPengumumanFragment.show(ft,"detail");
 
     }
+    //dibutuhkan di filter
+    //cmn ui yg d butuhin, krn view ga butuh d panggil d tmpt lain
 
     @Override
     public void reloadAdapter() {

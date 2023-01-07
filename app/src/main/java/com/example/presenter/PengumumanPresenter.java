@@ -51,6 +51,8 @@ public class PengumumanPresenter {
         this.ambilTags();
         this.callAPI(false);
     }
+    //kl pk iscursor = tru, dia ambil next page
+    //kl false, dia ambil dr awal dgn filter"nya
     public void callAPI(boolean isCursor){
         String Base_URL=announcementsURL;
         if(!isCursor){
@@ -93,6 +95,7 @@ public class PengumumanPresenter {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
+                //ambil token dari kelas pengumumanfrag/ hasil login
                 map.put("Authorization","Bearer "+ui.getToken());
                 return map;
             }
@@ -100,6 +103,7 @@ public class PengumumanPresenter {
         queue.add(stringRequest);
     }
     public void memprosesKeluaranBerhasil(String response) throws JSONException {
+        //metod ini perlu this.ui buat ngejalanin logika yg sd d buat (setvisible,dll)
         JSONObject jsonObject = new JSONObject(response);
         //hasil dari respon ada "metadata" di dalemnya dan di dlm meta data ada next
         Object object = jsonObject.getJSONObject("metadata").get("next");
@@ -135,6 +139,7 @@ public class PengumumanPresenter {
 
     public void ambilTags(){
 //        if(sp.contains("checkTag")){
+        //sp nge-dapetin dari data local hp (shared pref)
         if(sp.getString("checkTag","").equals("")){
             checkTag.clear();
             this.ui.setFilter("Filter : None");

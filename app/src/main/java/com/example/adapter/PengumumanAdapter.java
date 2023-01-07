@@ -13,7 +13,7 @@ import com.example.uas_p3b.databinding.ListMenuBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//buat nampilin list pengumuman per 5 biji
 public class PengumumanAdapter extends BaseAdapter {
     private ItemListPengumumanBinding binding;
     private List<Pengumuman> daftarPengumuman;
@@ -81,7 +81,7 @@ public class PengumumanAdapter extends BaseAdapter {
             binding.TampilTags.setText(tags);
             binding.pengumuman.setOnClickListener(this);
         }
-
+        //butuh inisialisasi d view, buat nampilin ke detail
         @Override
         public void onClick(View view) {
             if(view == binding.pengumuman){

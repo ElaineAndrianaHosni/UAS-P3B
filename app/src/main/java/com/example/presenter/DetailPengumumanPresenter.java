@@ -1,6 +1,7 @@
 package com.example.presenter;
 
 import android.app.DownloadManager;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,7 +35,7 @@ public class DetailPengumumanPresenter {
     public void callAPI(){
         RequestQueue queue = Volley.newRequestQueue(ui.getCtx());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                announcemnetURL, new Response.Listener<String>() {
+                announcemnetURL+"/"+ui.getIdPengumuman(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -59,12 +60,14 @@ public class DetailPengumumanPresenter {
         queue.add(stringRequest);
     }
     public void memprosesKeluaranBerhasil(String response)throws JSONException{
+       // Log.d( "memprosesKeluaranBerhasil: ",response);
+        //ga pake json objek mempermudah masukin ke class pengumuman
         Pengumuman pengumuman = gson.fromJson(response,Pengumuman.class);
         String semuaTags = "";
-//        for(int i=0;i<pengumuman.getTags().size();i++){
-//            semuaTags+=pengumuman.getTags().get(i).getTag()+",";
-//        }
-//        semuaTags = semuaTags.substring(0,semuaTags.length()-1);
+        for(int i=0;i<pengumuman.getTags().size();i++){
+            semuaTags+=pengumuman.getTags().get(i).getTag()+",";
+        }
+        semuaTags = semuaTags.substring(0,semuaTags.length()-1);
         String dateTime = pengumuman.getCreated_at();
         String tanggal = dateTime.substring(0,10);
         String jam = dateTime.substring(11,19);
