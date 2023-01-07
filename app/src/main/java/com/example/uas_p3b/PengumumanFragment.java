@@ -45,6 +45,7 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
         binding.refresh.setOnClickListener(this);
         binding.next.setOnClickListener(this);
         binding.filter.setOnClickListener(this);
+
         return binding.getRoot();
 
     }
@@ -109,18 +110,25 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
     }
 
     @Override
-    public void backAdapter() {
-        binding.listview.setAdapter(adapter);
+    public void noDataAdapter() {
+        binding.listview.setAdapter(new ArrayAdapter<String>(getActivity(),R.layout.item_list_pengumuman,R.id.TampilJudul,new String[]{"Hasil tidak ditemukan!"}));
     }
 
 
     @Override
     public void updateList(List<Pengumuman> list) {
+        binding.listview.setAdapter(adapter);
         this.adapter.update(list);
     }
 
     @Override
-    public void listenerOnClick(int pos) {
+    public void listenerOnClick(String id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id",id);
+        DetailPengumumanFragment detailPengumumanFragment = new DetailPengumumanFragment(this);
+        detailPengumumanFragment.setArguments(bundle);
+        FragmentTransaction ft =getActivity().getSupportFragmentManager().beginTransaction();
+        detailPengumumanFragment.show(ft,"detail");
 
     }
 

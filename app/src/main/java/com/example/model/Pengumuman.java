@@ -8,15 +8,25 @@ public class Pengumuman {
     private String updated_at;
     private String created_at;
     private Author author;
+    private String content;
     private ArrayList<Tags> tags;
 
-    public Pengumuman(String id, String title, String updated_at, String created_at, Author author, ArrayList<Tags> tags) {
+    public Pengumuman(String id, String title, String updated_at, String created_at, Author author, String content, ArrayList<Tags> tags) {
         this.id = id;
         this.title = title;
         this.updated_at = updated_at;
         this.created_at = created_at;
         this.author = author;
+        this.content = content;
         this.tags = tags;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getId() {

@@ -17,10 +17,10 @@ public interface PengumumanUI {
     public void menampilkanError(String error);
     public void setVisibleBtnNext(boolean visible);
     public void loadingAdapter();
-    public void backAdapter();
+    public void noDataAdapter();
     //untuk mengupdate smua list yang ada
     public void updateList(List<Pengumuman> list);
     //buat manggil kom antara fragment
-    public void listenerOnClick (int pos);
+    public void listenerOnClick (String id);
     public void reloadAdapter();
 }

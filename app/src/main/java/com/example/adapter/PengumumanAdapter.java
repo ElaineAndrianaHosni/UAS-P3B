@@ -63,13 +63,15 @@ public class PengumumanAdapter extends BaseAdapter {
     private class ViewHolder implements View.OnClickListener{
         private ItemListPengumumanBinding binding;
         private PengumumanUI ui;
-        private int pos;
+        private Pengumuman pengumuman;
+
 
         public ViewHolder(ItemListPengumumanBinding binding, PengumumanUI ui) {
             this.binding = binding;
             this.ui = ui;
         }
         public void updateView(Pengumuman pengumuman, int pos){
+            this.pengumuman=pengumuman;
             binding.TampilJudul.setText(pengumuman.getTitle());
             String tags = "";
             for(int i=0;i<pengumuman.getTags().size();i++){
@@ -83,7 +85,7 @@ public class PengumumanAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             if(view == binding.pengumuman){
-                this.ui.listenerOnClick(pos);
+                this.ui.listenerOnClick(pengumuman.getId());
             }
         }
     }

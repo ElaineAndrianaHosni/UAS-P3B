@@ -110,8 +110,11 @@ public class PengumumanPresenter {
         }
         JSONArray jsonArray = jsonObject.getJSONArray("data");
         list = gson.fromJson(jsonArray.toString(),new TypeToken<ArrayList<Pengumuman>>(){}.getType());
-        this.ui.backAdapter();
-        this.ui.updateList(list);
+        if(list.size()>0){
+            this.ui.updateList(list);
+        }else{
+            this.ui.noDataAdapter();
+        }
     }
     public void memprosesKeluaranGagal(VolleyError error) throws JSONException{
         String res="";
@@ -155,5 +158,6 @@ public class PengumumanPresenter {
         editor.clear();
         editor.apply();
         ambilTags();
+        this.callAPI(false);
     }
 }
