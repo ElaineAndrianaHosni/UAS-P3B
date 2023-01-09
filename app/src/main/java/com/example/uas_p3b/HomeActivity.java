@@ -2,6 +2,7 @@ package com.example.uas_p3b;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
     private HomeBinding binding;
     private HomePresenter hp;
     private String token;
+    private String email;
+    private String role;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,11 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
         Intent intent = getIntent();
         //ambil token dari login
         this.token = intent.getStringExtra("token");
+        //ambil email
+        this.email = intent.getStringExtra("email");
+        //ambil role
+        this.role = intent.getStringExtra("role");
+
 
         setContentView(binding.getRoot());
         hp = new HomePresenter(this);
@@ -36,13 +44,15 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result){
                         String page = result.getString("page");
-                        int pos=result.getInt("pos");
-
-//                        if(page=="Dokter Form"||page=="Pertemuan Form"){
-//                            changePage(page,pos);
-//                        }else{
-                            changePage(page);
-//                        }
+                        if(page=="detailSemester"){
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("tahundansem",result.getInt("tahundansem"));
+                            bundle.putString("heading",result.getString("heading"));
+                            changePage(page,bundle);
+                        }
+                        else{
+                            changePage(page,null);
+                        }
                         binding.drawerLayout.closeDrawers();
                     }
 
@@ -62,17 +72,27 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
     }
 
     @Override
-    public void changePage(String page) {
+    public void changePage(String page,Bundle bundle) {
         FragmentTransaction ft=this.getSupportFragmentManager().beginTransaction();
         switch(page){
             case "Home":
-                ft.replace(binding.fragmentContainer.getId(), HomeFragment.newInstance());
+                ft.replace(binding.fragmentContainer.getId(), HomeFragment.newInstance(this));
                 ft.addToBackStack(null);
                 break;
             case "pengumuman":
                 ft.replace(binding.fragmentContainer.getId(), PengumumanFragment.newInstance(token));
                 ft.addToBackStack(null);
                 break;
+            case "frs":
+                if(role=="students"){
+                    ft.replace(binding.fragmentContainer.getId(), FRSFragment.newInstance(this));
+                    ft.addToBackStack(null);
+                    break;
+                }else{
+                    Toast.makeText(this, "Bukan Mahasiswa", Toast.LENGTH_SHORT).show();
+                }
+
+
         }
 
         ft.commit();
@@ -86,6 +106,17 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
 
     @Override
     public String getToken() {
-        return null;
+        return this.token;
+    }
+
+
+    @Override
+    public String getRole() {
+        return this.role;
+    }
+
+    @Override
+    public String getEmail() {
+        return this.email;
     }
 }

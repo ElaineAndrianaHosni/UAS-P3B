@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements MainUI, View.OnCl
         Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,HomeActivity.class);
         intent.putExtra("token",token);
+        intent.putExtra("email",binding.etEmail.toString());
+        intent.putExtra("role",binding.etRole.getText().toString());
         MainActivity.this.startActivity(intent);
 
     }

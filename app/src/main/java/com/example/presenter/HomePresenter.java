@@ -8,7 +8,10 @@ public class HomePresenter {
 
     public HomePresenter(HomeUI ui) {
         this.ui = ui;
+        if(ui.getRole()!="student"){
+
+        }
         //inisialisasi page pertama yang kebuka di home
-        this.ui.changePage("Home");
+        this.ui.changePage("Home", null);
     }
 }
