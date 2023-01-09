@@ -32,12 +32,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TambahMatkulFragment extends Fragment {
-    TambahMatkulBinding tambahMatkulBinding;
-    int sem;
-    int offset;
-    HashMap<String,String> map;
-    ArrayList<String> matkul;
-    ArrayList<String> matkulygdiambil;
+    private TambahMatkulBinding tambahMatkulBinding;
+    private int sem;
+    private int offset;
+    private HashMap<String,String> map;
+    private ArrayList<String> matkul;
+    private ArrayList<String> matkulygdiambil;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

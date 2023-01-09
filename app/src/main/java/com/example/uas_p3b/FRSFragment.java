@@ -1,5 +1,6 @@
 package com.example.uas_p3b;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.adapter.FRSAdapter;
+import com.example.contract.FRSUI;
+import com.example.presenter.FRSPresenter;
 import com.example.uas_p3b.databinding.LayoutFrsBinding;
 
 import org.json.JSONArray;
@@ -30,94 +33,55 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FRSFragment extends Fragment {
-    LayoutFrsBinding frsBinding;
-    FRSAdapter adapterFRS;
-    //initial dapet waktu login
-    int initial_year;
-    int active_year;
-    ArrayList<Integer> semester;
+public class FRSFragment extends Fragment implements FRSUI, View.OnClickListener{
+    private LayoutFrsBinding frsBinding;
+    private String token;
+    private FRSAdapter adapter;
+    private FRSPresenter presenter;
+
+    public FRSFragment(String token) {
+        this.token = token;
+    }
+
+    public static FRSFragment newInstance(String token){
+        return new FRSFragment(token);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         frsBinding = LayoutFrsBinding.inflate(inflater,container,false);
         View view = frsBinding.getRoot();
-        semester = new ArrayList<>();
-        callAPI("https://ifportal.labftis.net/api/v1/students/email/aguero@sergio.com","cariInitialYear");
+        presenter = new FRSPresenter(this);
+        adapter = new FRSAdapter(this);
+
+//        semester = new ArrayList<>();
+        presenter.callAPI("cariInitialYear");
         return view;
     }
-    public static FRSFragment newInstance(){
-        FRSFragment fragment = new FRSFragment();
-        return fragment;
-    }
-    public void callAPI(String Base_URL,String ngapain){
-        frsBinding.lstFrs.setAdapter(new ArrayAdapter<String>(getActivity(),R.layout.simple_item_spinner,R.id.isi,new String[]{"Harap Tunggu..."}));
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                Base_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    if(ngapain.equals("cariTahun")){
-                        memprosesKeluaranBerhasil(response);
-                    }
-                    else{
-                        memprosesInitialYear(response);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                try {
-                    memprosesKeluaranGagal(error);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2ZTY2ODZmMC0yOTZlLTRjNzItOGE0NS1hNmFjMWVkNDhlNDQiLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjcxODY3ODQ5fQ.1i7kt7EWvw_q9EzRPFGePWiZxx4c5dRmMSm1jV93g_I");
-                return map;
-            }
-        };
-        queue.add(stringRequest);
-    }
-    public void memprosesKeluaranBerhasil(String response) throws JSONException {
-        JSONObject jsonObject = new JSONObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray("academic_years");
-        this.active_year = jsonObject.getInt("active_year");
-        for(int i=0;i<jsonArray.length();i++){
-            int masukan = jsonArray.getInt(i);
-            int tahun = masukan/10;
-            if(tahun<=(this.initial_year/10)+7 && tahun>=(this.initial_year/10)){
-                semester.add(masukan);
-            }
-        }
-        adapterFRS = new FRSAdapter(semester,getActivity(),active_year);
-        frsBinding.lstFrs.setAdapter(adapterFRS);
-    }
-    public void memprosesKeluaranGagal(VolleyError error) throws JSONException {
-        if(error instanceof NoConnectionError){
-            Toast.makeText(getActivity(),"Tidak ada koneksi internet",Toast.LENGTH_LONG).show();
-        }else if(error instanceof TimeoutError){
-            Toast.makeText(getActivity(),"Server memakan waktu lama untuk merespon\nCoba Lagi!",Toast.LENGTH_LONG).show();
-        }
-        else{
-            String jsonKeluaran = new String(error.networkResponse.data);
-            JSONObject jsonObject = new JSONObject(jsonKeluaran);
-            String keluaran = jsonObject.get("errcode").toString();
 
-            Toast.makeText(getActivity(),keluaran,Toast.LENGTH_LONG).show();
-        }
+    @Override
+    public void onClick(View view) {
+
     }
-    public void memprosesInitialYear(String response) throws JSONException {
-        initial_year = new JSONObject(response).getInt("initial_year");
-        callAPI("https://ifportal.labftis.net/api/v1/academic-years","cariTahun");
+
+    @Override
+    public String getToken() {
+        return token;
+    }
+
+    @Override
+    public Activity getAct() {
+        return getActivity();
+    }
+
+    @Override
+    public LayoutInflater getLayout() {
+        return getLayoutInflater();
+    }
+
+    @Override
+    public void menampilkanError(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 }

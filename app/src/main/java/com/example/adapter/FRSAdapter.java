@@ -1,5 +1,6 @@
 package com.example.adapter;
 
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -8,22 +9,27 @@ import android.widget.BaseAdapter;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.contract.FRSUI;
 import com.example.uas_p3b.databinding.ListFrsBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FRSAdapter extends BaseAdapter {
-    ListFrsBinding binding;
-    ArrayList<Integer> tahundansemester;
-    FragmentActivity fragmentActivity;
-    HashMap<Integer,String> map;
-    int active_year;
-    public FRSAdapter(ArrayList<Integer> tahundansemester, FragmentActivity fragmentActivity,int active_year){
-        this.tahundansemester = tahundansemester;
-        this.fragmentActivity = fragmentActivity;
+    private ListFrsBinding binding;
+    private FRSUI ui;
+    private ArrayList<Integer> tahundansemester;
+    private Activity fragmentActivity;
+    private HashMap<Integer,String> map;
+    private int active_year;
+
+    public FRSAdapter(FRSUI ui){
+        this.ui = ui;
+        this.tahundansemester = new ArrayList<>();
+        this.fragmentActivity = ui.getAct();
         this.active_year = active_year;
     }
+
     @Override
     public int getCount() {
         return tahundansemester.size();
