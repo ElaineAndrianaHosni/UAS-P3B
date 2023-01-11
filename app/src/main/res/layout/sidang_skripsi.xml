@@ -37,7 +37,10 @@
             android:layout_height="wrap_content"
             android:text="Mark as unread"
             android:backgroundTint="@color/grey"
-            android:textColor="@color/black">
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_selector">
 
         </Button>
 
