@@ -142,15 +142,15 @@ public class TambahMatkulFragment extends Fragment implements TambahMatkulUI {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-//                map.put("Authorization","Bearer"+token);
-                if(ngapain.equals("cariprasyarat")){
-                    //token admin
-                    map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2ZTY2ODZmMC0yOTZlLTRjNzItOGE0NS1hNmFjMWVkNDhlNDQiLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjcyODM5MDc3fQ.H0fk8_L7x2giPEa8bylXJEreaTMdzksRwLGs7y7SgO4");
-                }
-                else{
-                    //token student
-                    map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiJkNGNjOGZjMS02YmUyLTQ0MTEtOTJmNC01MDI3YTkyODEzNmMiLCJyb2xlIjoic3R1ZGVudCJ9LCJpYXQiOjE2NzI4Mzg5NzV9.-XiT0zGpiNgcKG8rdym4bL8_r7iC8Wfy4vNcYgeYAKk");
-                }
+                map.put("Authorization","Bearer " + token);
+//                if(ngapain.equals("cariprasyarat")){
+//                    //token admin
+//                    map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2ZTY2ODZmMC0yOTZlLTRjNzItOGE0NS1hNmFjMWVkNDhlNDQiLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjcyODM5MDc3fQ.H0fk8_L7x2giPEa8bylXJEreaTMdzksRwLGs7y7SgO4");
+//                }
+//                else{
+//                    //token student
+//                    map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiJkNGNjOGZjMS02YmUyLTQ0MTEtOTJmNC01MDI3YTkyODEzNmMiLCJyb2xlIjoic3R1ZGVudCJ9LCJpYXQiOjE2NzI4Mzg5NzV9.-XiT0zGpiNgcKG8rdym4bL8_r7iC8Wfy4vNcYgeYAKk");
+//                }
 
                 return map;
             }

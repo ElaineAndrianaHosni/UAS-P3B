@@ -112,14 +112,18 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
                 ft.replace(binding.fragmentContainer.getId(), tf);
                 ft.addToBackStack(null);
                 break;
-//            case "pertemuan":
-//                ft.replace(binding.fragmentContainer.getId(), new PertemuanFragment(token));
-//                ft.addToBackStack(null);
-//                break;
-//            case "pertemuan":
-//                ft.replace(binding.fragmentContainer.getId(), new PertemuanFragment(token));
-//                ft.addToBackStack(null);
-//                break;
+            case "pertemuan":
+                ft.replace(binding.fragmentContainer.getId(), new PertemuanFragment(token));
+                ft.addToBackStack(null);
+                break;
+            case "daftarundangan":
+                ft.replace(binding.fragmentContainer.getId(), new DaftarUndanganFragment(token));
+                ft.addToBackStack(null);
+                break;
+            case "tambahpertemuan":
+                ft.replace(binding.fragmentContainer.getId(), new TambahPertemuanFragment(token));
+                ft.addToBackStack(null);
+                break;
 
 
 

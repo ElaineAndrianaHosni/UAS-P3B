@@ -17,4 +17,32 @@ public class Undangan {
         this.organizer = organizer;
         this.attending = attending;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getStarted_datetime() {
+        return started_datetime;
+    }
+
+    public String getEnd_datetime() {
+        return end_datetime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getOrganizer() {
+        return organizer;
+    }
+
+    public boolean isAttending() {
+        return attending;
+    }
 }

@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         binding.pengumuman.setOnClickListener(this);
         binding.keluar.setOnClickListener(this);
         binding.frs.setOnClickListener(this);
+        binding.pertemuan.setOnClickListener(this);
         presenter= new HomeFragmentPresenter(this);
         return binding.getRoot();
     }
@@ -42,6 +43,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
             this.getParentFragmentManager().setFragmentResult("closeApp",new Bundle());
         }else if (view==binding.frs){
             changePage("FRS");
+        }else if(view == binding.pertemuan){
+            changePage("pertemuan");
         }
     }
     private void changePage(String page){

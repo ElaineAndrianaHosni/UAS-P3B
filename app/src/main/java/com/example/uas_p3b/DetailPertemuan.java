@@ -81,7 +81,7 @@ public class DetailPertemuan extends DialogFragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
 //                map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiJkNGNjOGZjMS02YmUyLTQ0MTEtOTJmNC01MDI3YTkyODEzNmMiLCJyb2xlIjoic3R1ZGVudCJ9LCJpYXQiOjE2NzMzNDQxMDh9.mbbsCLimrxtyQEa9eeeOwx43HJJ95f-IgjKmOabvHf8");
-                map.put("Authorization","Bearer"+token);
+                map.put("Authorization","Bearer "+token);
                 return map;
             }
         };
