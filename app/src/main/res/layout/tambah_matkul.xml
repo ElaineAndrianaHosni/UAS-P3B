@@ -13,8 +13,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="30dp"
-            android:text="Tambah"
-            android:textColor="@color/lightBlue"
+            android:textAlignment="center"
+            android:text="Tambah Mata Kuliah"
+            android:textColor="@color/blue"
             android:textSize="40dp"
             android:fontFamily="sans-serif-medium"
             android:textStyle="bold|italic"
@@ -26,13 +27,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:id="@+id/smt"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp">
         </TextView>
         <Spinner
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list"
             android:layout_marginLeft="30dp"
@@ -78,6 +79,10 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:enabled="false"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_selector"
             >
         </Button>
         <!--        <Button-->

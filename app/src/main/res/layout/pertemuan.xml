@@ -21,7 +21,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
                 android:text="Pertemuan"
-                android:textColor="@color/lightBlue"
+                android:textColor="@color/blue"
                 android:textSize="40dp"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold|italic"

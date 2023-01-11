@@ -21,7 +21,7 @@
             android:shadowDy="1.3"
             android:shadowRadius="1.6"
             android:text="Bimbingan"
-            android:textColor="@color/lightBlue"
+            android:textColor="@color/blue"
             android:textSize="40dp"
             android:textStyle="bold|italic"></TextView>
 
@@ -31,7 +31,8 @@
             android:layout_height="match_parent"
             android:layout_margin="30dp"
             android:gravity="bottom"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/round_linear">
 
             <TextView
                 android:id="@+id/organizer"
@@ -80,7 +81,9 @@
                     android:layout_weight="0.5"
                     android:backgroundTint="@color/grey"
                     android:text="Accept"
-                    android:textColor="@color/black"></Button>
+                    android:textColor="@color/white"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/button_selector"></Button>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -89,7 +92,9 @@
                     android:layout_weight="0.5"
                     android:backgroundTint="@color/grey"
                     android:text="Decline"
-                    android:textColor="@color/black"></Button>
+                    android:textColor="@color/white"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/button_selector"></Button>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
