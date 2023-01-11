@@ -38,6 +38,7 @@
 
         <EditText
             android:layout_width="match_parent"
+            android:id="@+id/et_title"
             android:layout_height="50dp"
             android:background="@drawable/rounded_border"
             android:layout_marginTop="5dp">
@@ -54,6 +55,7 @@
         </TextView>
 
         <EditText
+            android:id="@+id/et_tags"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/rounded_border"
@@ -72,6 +74,7 @@
 
         <EditText
             android:layout_width="match_parent"
+            android:id="@+id/et_content"
             android:layout_height="200dp"
             android:background="@drawable/rounded_border"
             android:layout_marginTop="5dp">
@@ -79,6 +82,7 @@
         </EditText>
 
         <Button
+            android:id="@+id/btn_simpan"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Simpan"

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainUI, View.OnCl
     @Override
     public void onClick(View view) {
         if(view==binding.btnLogin){
-            Log.d( "onClick: ",mp.arrRole[this.pos]);
+           // Log.d( "onClick: ",mp.arrRole[this.pos]);
             mp.Login(binding.etEmail.getText().toString(),binding.etPassword.getText().toString(),mp.arrRole[this.pos]);
             email = String.valueOf(binding.etEmail.getText());
         }
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainUI, View.OnCl
         return email;
     }
 
+    //buat spinner
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         this.pos=i;
