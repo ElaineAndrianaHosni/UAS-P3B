@@ -6,14 +6,14 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="79dp"
-        android:background="@drawable/logoif"
         android:layout_alignParentTop="true"
         android:layout_marginTop="70dp"
         android:layout_marginLeft="55dp"
         android:layout_marginRight="55dp"
         android:layout_marginBottom="30dp"
-        android:gravity="center"
-        android:id="@+id/logo"></TextView>
+        android:gravity="center">
+    <!--        android:background="@drawable/logoif"-->
+        </TextView>
 <!--    <TextView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->

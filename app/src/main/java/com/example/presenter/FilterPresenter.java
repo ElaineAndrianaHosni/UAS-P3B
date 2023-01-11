@@ -2,6 +2,7 @@ package com.example.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -12,6 +13,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.contract.FilterUI;
 import com.example.model.Config;
+import com.example.model.Filter;
+import com.example.model.Tags;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +24,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,22 +32,18 @@ public class FilterPresenter {
     private List<String> dicheck;
     private SharedPreferences sp;
     private HashMap<String,String>hashMap;
+    private List<Filter> list;
+    private List<Tags> tagsList;
+    private Gson gson;
     private final static String tagsURL = Config.BASE_URL + "tags";
     private FilterUI ui;
 
     public FilterPresenter(FilterUI ui) {
         this.ui = ui;
-        sp = ui.getAct().getPreferences(Context.MODE_PRIVATE);
-        hashMap = new HashMap<>();
-//        if(sp.contains("checkTag")){
-        if(sp.getString("checkTag","").equals("")){
-            dicheck = new ArrayList<>();
-        }
-        else{
-            dicheck = new ArrayList<>(Arrays.asList(sp.getString("checkTag","").split(",")));
-        }
-
-//        }
+        this.sp = ui.getAct().getPreferences(Context.MODE_PRIVATE);
+        this.list=new LinkedList<>();
+        this.tagsList=new ArrayList<>();
+        this.gson=new Gson();
         callAPI();
     }
     public void callAPI(){
@@ -71,30 +73,49 @@ public class FilterPresenter {
         };
         queue.add(stringRequest);
     }
-    //ambil tag disiniii
     public void memprosesKeluaranBerhasil(String response) throws JSONException {
-        JSONArray jsonArray = new JSONArray(response);
-        for(int i=0;i<jsonArray.length();i++){
-            hashMap.put(jsonArray.getJSONObject(i).getString("tag"),jsonArray.getJSONObject(i).getString("id"));
-            this.ui.createCheckBox(jsonArray.getJSONObject(i).getString("tag"),dicheck.contains(jsonArray.getJSONObject(i).getString("tag")));
+        if(sp.getString("checkTag","").equals("")){
+            dicheck = new ArrayList<>();
         }
-       this.ui.createBTNApply();
+        else{
+            dicheck = new ArrayList<>(Arrays.asList(sp.getString("checkTag","").split(",")));
+        }
+        this.tagsList=this.gson.fromJson(response,new TypeToken<ArrayList<Tags>>(){}.getType());
+        for (Tags tag :this.tagsList) {
+            list.add(new Filter(tag,dicheck.contains(tag.getTag())));
+        }
+        ui.updateList(list);
+
+//        for(int i=0;i<jsonArray.length();i++){
+//            hashMap.put(jsonArray.getJSONObject(i).getString("tag"),jsonArray.getJSONObject(i).getString("id"));
+////            this.ui.createCheckBox(jsonArray.getJSONObject(i).getString("tag"),dicheck.contains(jsonArray.getJSONObject(i).getString("tag")));
+//        }
+//       this.ui.createBTNApply();
 
     }
     public void onChangeClick(String text,boolean isChecked){
         if(isChecked){
-            dicheck.add(text);
-        }
-        else{
+            if(!dicheck.contains(text)){
+                dicheck.add(text);
+            }
+        }else{
+            Log.d("onChangeClick: ","masuk");
             dicheck.remove(text);
         }
+        Log.d( "onChangeClick: ",this.gson.toJson(dicheck));
     }
     public void onApply(){
-        SharedPreferences.Editor editor = sp.edit();
         String id="";
-        for(int i=0;i<dicheck.size();i++){
-            id+=hashMap.get(dicheck.get(i))+",";
+        String stringTag = "";
+//        for(int i=0;i<dicheck.size();i++){
+        for (Tags tag:this.tagsList) {
+            if(dicheck.contains(tag.getTag())){
+                id+=tag.getId()+",";
+                stringTag+=tag.getTag()+",";
+            }
         }
+//        }
+        SharedPreferences.Editor editor = sp.edit();
         if(id.length()!=0){
             editor.putString("checkTagId",id.substring(0,id.length()-1));
         }
@@ -102,12 +123,8 @@ public class FilterPresenter {
             editor.putString("checkTagId","");
         }
 
-        String tag = "";
-        for(int i=0;i<dicheck.size();i++){
-            tag+=dicheck.get(i)+",";
-        }
-        if(tag.length()!=0){
-            editor.putString("checkTag",tag.substring(0,tag.length()-1));
+        if(stringTag.length()!=0){
+            editor.putString("checkTag",stringTag.substring(0,stringTag.length()-1));
         }
         else{
             editor.putString("checkTag","");
