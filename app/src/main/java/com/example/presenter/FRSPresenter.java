@@ -48,6 +48,7 @@ public class FRSPresenter {
     }
     public void callAPI(String BASE_URL,String ngapain){
 
+        this.ui.loadingAdapter();
 //        frsBinding.lstFrs.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_item_spinner,R.id.isi,new String[]{"Harap Tunggu..."}));
         RequestQueue queue = Volley.newRequestQueue(this.ui.getAct());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,

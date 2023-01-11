@@ -2,6 +2,7 @@ package com.example.uas_p3b;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,7 @@ public class FRSFragment extends Fragment implements FRSUI, View.OnClickListener
 
     @Override
     public void updateList(List<Integer> list) {
+        frsBinding.lstFrs.setAdapter(adapter);
         adapter.update(list);
     }
 
@@ -93,4 +95,10 @@ public class FRSFragment extends Fragment implements FRSUI, View.OnClickListener
     public void changePage(Bundle bundle) {
         getParentFragmentManager().setFragmentResult("changePage",bundle);
     }
+
+    @Override
+    public void loadingAdapter() {
+        frsBinding.lstFrs.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_item_spinner,R.id.isi,new String[]{"Harap Tunggu..."}));
+    }
+
 }

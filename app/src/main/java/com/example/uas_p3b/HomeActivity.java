@@ -46,8 +46,10 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
                 "changePage", this,new FragmentResultListener(){
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result){
+
                         String page = result.getString("page");
-                        if(page=="detailSemester"){
+                        if(page=="detailSemester"||page=="tambahMatkul"){
+
                             Bundle bundle = new Bundle();
                             bundle.putInt("tahundansem",result.getInt("tahundansem"));
                             bundle.putString("heading",result.getString("heading"));
@@ -98,6 +100,23 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
                 }else{
                     Toast.makeText(this, "Bukan Mahasiswa", Toast.LENGTH_SHORT).show();
                 }
+            case "detailsemester":
+                SemesterFragment sf= new SemesterFragment(this);
+                sf.setArguments(bundle);
+                ft.replace(binding.fragmentContainer.getId(), sf);
+                ft.addToBackStack(null);
+                break;
+            case "tambahmatkul":
+                TambahMatkulFragment tf= new TambahMatkulFragment(token);
+                tf.setArguments(bundle);
+                ft.replace(binding.fragmentContainer.getId(), tf);
+                ft.addToBackStack(null);
+                break;
+            case "pertemuan":
+                ft.replace(binding.fragmentContainer.getId(), PertemuanFragment.newInstance(token));
+                ft.addToBackStack(null);
+                break;
+
 
 
         }

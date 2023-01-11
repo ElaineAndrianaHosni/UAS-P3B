@@ -18,4 +18,5 @@ public interface FRSUI {
     public void updateList(List<Integer> list);
     //bundle bundle buat ngirim ke change pagenya
     public void changePage(Bundle bundle);
+    public void loadingAdapter();
 }

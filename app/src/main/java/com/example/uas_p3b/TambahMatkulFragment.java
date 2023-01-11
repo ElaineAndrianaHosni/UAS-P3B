@@ -1,5 +1,6 @@
 package com.example.uas_p3b;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.contract.TambahMatkulUI;
 import com.example.uas_p3b.databinding.TambahMatkulBinding;
 
 import org.json.JSONArray;
@@ -31,13 +33,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TambahMatkulFragment extends Fragment {
+public class TambahMatkulFragment extends Fragment implements TambahMatkulUI {
     private TambahMatkulBinding tambahMatkulBinding;
+    private String token;
     private int sem;
     private int offset;
     private HashMap<String,String> map;
     private ArrayList<String> matkul;
     private ArrayList<String> matkulygdiambil;
+
+    public TambahMatkulFragment(String token) {
+        this.token = token;
+    }
+
+    public TambahMatkulFragment newInstance(String token){
+        return new TambahMatkulFragment(token);
+    }
 
     @Nullable
     @Override
@@ -131,6 +142,7 @@ public class TambahMatkulFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
+//                map.put("Authorization","Bearer"+token);
                 if(ngapain.equals("cariprasyarat")){
                     //token admin
                     map.put("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2ZTY2ODZmMC0yOTZlLTRjNzItOGE0NS1hNmFjMWVkNDhlNDQiLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjcyODM5MDc3fQ.H0fk8_L7x2giPEa8bylXJEreaTMdzksRwLGs7y7SgO4");
@@ -247,6 +259,12 @@ public class TambahMatkulFragment extends Fragment {
         }
         tambahMatkulBinding.ambil.setEnabled(true);
     }
+
+    @Override
+    public Context getCtx() {
+        return getContext();
+    }
+
     class Matkul{
         String nama;
         String id;

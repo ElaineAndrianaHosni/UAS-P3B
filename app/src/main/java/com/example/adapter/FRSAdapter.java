@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.os.IResultReceiver;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -66,7 +67,7 @@ public class FRSAdapter extends BaseAdapter {
         }
         vh.updateView(getItem(position));
 
-        int tahun = tahundansemester.get(position)/10;
+//        int tahun = tahundansemester.get(position)/10;
 
 //        if(tahundansemester.get(position)==active_year){
 //            binding.smt.setTypeface(binding.smt.getTypeface(), Typeface.BOLD_ITALIC);
@@ -137,14 +138,19 @@ public class FRSAdapter extends BaseAdapter {
 
         public void updateView(int tahundansemester) {
             this.tahundansemester = tahundansemester;
+            if(tahundansemester==ui.getActiveYear()){
+                binding.smt.setTypeface(binding.smt.getTypeface(), Typeface.BOLD_ITALIC);
+            }
             int tahun = tahundansemester / 10;
             String semester = map.get(tahundansemester % 10);
             binding.smt.setText(semester + " " + tahun + "/" + (tahun + 1));
+            binding.containerSemester.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (view == binding.containerSemester) {
+
                 Bundle result = new Bundle();
                 int tahun = tahundansemester/10;
                 String semester = map.get(tahundansemester % 10);
