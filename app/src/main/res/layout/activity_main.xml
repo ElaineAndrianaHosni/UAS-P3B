@@ -4,62 +4,91 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="79dp"
+        android:background="@drawable/logoif"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="LOGIN"
-        android:textSize="25sp">
+        android:id="@+id/logo"></TextView>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="70dp"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        android:layout_marginBottom="5dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="LOGIN"-->
+<!--        android:textSize="25sp">-->
 
-    </TextView>
+<!--    </TextView>-->
 
     <LinearLayout
+        android:layout_below="@+id/logo"
         android:layout_width="300dp"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@color/grey">
-
+        android:background="@drawable/round_linear"
+        android:elevation="10dp"
+        >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="LOGIN"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            ></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
             android:text="Email"
-            android:textSize="20sp" />
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"/>
 
         <EditText
             android:id="@+id/et_email"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:text="Password"
-            android:textSize="20sp" />
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"/>
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:inputType="textPassword"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:text="Role"
-            android:textSize="20sp" />
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            />
         <!--        <EditText-->
         <!--            android:id="@+id/et_role"-->
         <!--            android:layout_width="200dp"-->
@@ -68,15 +97,19 @@
         <!--            android:textAlignment="center"/>-->
         <Spinner
             android:id="@+id/spiner_role"
-            android:layout_width="200dp"
-            android:layout_height="50dp" />
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:background="@drawable/spinner_background"/>
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="110sp"
+            android:layout_height="55sp"
             android:layout_gravity="center"
-            android:text="Login" />
+            android:background="@drawable/button_selector"
+            android:text="Login"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"/>
 
     </LinearLayout>
 
