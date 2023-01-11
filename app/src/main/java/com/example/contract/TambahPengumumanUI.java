@@ -4,8 +4,7 @@ import android.content.Context;
 
 public interface TambahPengumumanUI {
     public Context getCtx();
-    public void menampilkanPesanError(String error);
-    public void berhasilTambah();
-
-
+    public void menampilkanError(String error);
+    public void berhasil();
+    public String getToken();
 }

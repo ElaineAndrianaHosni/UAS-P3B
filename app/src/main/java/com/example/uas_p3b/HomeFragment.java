@@ -11,14 +11,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.contract.HomeFragmentUI;
 import com.example.contract.HomeUI;
+import com.example.presenter.HomeFragmentPresenter;
 import com.example.uas_p3b.databinding.HomeFragmentBinding;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, HomeFragmentUI {
     private HomeFragmentBinding binding;
-    private HomeUI ui;
+    private HomeUI homeUI;
+    private HomeFragmentPresenter presenter;
 
-    public HomeFragment(HomeUI ui) {
-        this.ui = ui;
+    public HomeFragment(HomeUI homeUI) {
+        this.homeUI = homeUI;
     }
 
     @Nullable
@@ -28,6 +30,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         binding.pengumuman.setOnClickListener(this);
         binding.keluar.setOnClickListener(this);
         binding.frs.setOnClickListener(this);
+        presenter= new HomeFragmentPresenter(this);
         return binding.getRoot();
     }
 
@@ -38,7 +41,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         }else if(view==binding.keluar){
             this.getParentFragmentManager().setFragmentResult("closeApp",new Bundle());
         }else if (view==binding.frs){
-            changePage("frs");
+            changePage("FRS");
         }
     }
     private void changePage(String page){
@@ -46,17 +49,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         result.putString("page",page);
         getParentFragmentManager().setFragmentResult("changePage",result);
     }
-    public static HomeFragment newInstance(HomeUI ui){
-        return new HomeFragment(ui);
+    public static HomeFragment newInstance(HomeUI homeUI){
+        return new HomeFragment(homeUI);
     }
 
     @Override
     public String getRole() {
-        return ui.getRole();
+        return homeUI.getRole();
     }
 
     @Override
     public void enabledBtnFRS(boolean enabled) {
-        binding.frs.setEnabled(enabled);
+        if(enabled){
+            binding.frs.setVisibility(View.VISIBLE);
+
+        }else{
+            binding.frs.setVisibility(View.INVISIBLE);
+        }
     }
+
 }

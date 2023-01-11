@@ -58,7 +58,7 @@ public class PengumumanAdapter extends BaseAdapter {
         }
         vh.updateView(getItem(i),i);
         return view;
-        }
+    }
 
     private class ViewHolder implements View.OnClickListener{
         private ItemListPengumumanBinding binding;
@@ -77,7 +77,8 @@ public class PengumumanAdapter extends BaseAdapter {
             for(int i=0;i<pengumuman.getTags().size();i++){
                 tags+=pengumuman.getTags().get(i).getTag()+",";
             }
-            tags = tags.substring(0,tags.length()-1);
+            if(!tags.equals(""))
+                tags = tags.substring(0,tags.length()-1);
             binding.TampilTags.setText(tags);
             binding.pengumuman.setOnClickListener(this);
         }

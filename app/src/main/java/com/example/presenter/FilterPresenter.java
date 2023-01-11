@@ -71,6 +71,7 @@ public class FilterPresenter {
         };
         queue.add(stringRequest);
     }
+    //ambil tag disiniii
     public void memprosesKeluaranBerhasil(String response) throws JSONException {
         JSONArray jsonArray = new JSONArray(response);
         for(int i=0;i<jsonArray.length();i++){

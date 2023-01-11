@@ -15,17 +15,26 @@ import com.example.contract.TambahPengumumanUI;
 import com.example.presenter.TambahPengumumanPresenter;
 import com.example.uas_p3b.databinding.TambahPengumumanBinding;
 
-public class TambahPengumumanFragment extends Fragment implements TambahPengumumanUI {
+public class TambahPengumumanFragment extends Fragment implements TambahPengumumanUI,View.OnClickListener {
     private TambahPengumumanBinding binding;
+    private String token;
     private TambahPengumumanPresenter presenter;
+
+    public TambahPengumumanFragment(String token) {
+        this.token = token;
+    }
+    public static TambahPengumumanFragment newInstance(String token){
+        return new TambahPengumumanFragment(token);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = TambahPengumumanBinding.inflate(inflater,container,false);
+        binding=TambahPengumumanBinding.inflate(inflater,container,false);
+        presenter= new TambahPengumumanPresenter(this);
+        binding.btnSimpan.setOnClickListener(this);
 
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return binding.getRoot();
     }
 
     @Override
@@ -34,14 +43,27 @@ public class TambahPengumumanFragment extends Fragment implements TambahPengumum
     }
 
     @Override
-    public void menampilkanPesanError(String error) {
+    public void menampilkanError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void berhasilTambah() {
+    public void berhasil() {
+        Toast.makeText(getContext(), "Berhasil Menambah Pengumuman", Toast.LENGTH_SHORT).show();
         Bundle result = new Bundle();
-        result.putString("page","pengumman");
+        result.putString("page","pengumuman");
         getParentFragmentManager().setFragmentResult("changePage",result);
+    }
+
+    @Override
+    public String getToken() {
+        return this.token;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view==binding.btnSimpan){
+            presenter.simpanPengumuman(binding.etTitle.getText().toString(),binding.etContent.getText().toString(),binding.etTags.getText().toString());
+        }
     }
 }

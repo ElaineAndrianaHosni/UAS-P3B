@@ -51,6 +51,7 @@ public class PengumumanPresenter {
         this.ambilTags();
         this.callAPI(false);
     }
+    //METOD GETPENGUMUMAN DISINI!
     //kl pk iscursor = tru, dia ambil next page
     //kl false, dia ambil dr awal dgn filter"nya
     public void callAPI(boolean isCursor){
@@ -136,10 +137,10 @@ public class PengumumanPresenter {
         this.ui.menampilkanError(res);
 
     }
-
+    //METOD GETTAG DISINI
     public void ambilTags(){
 //        if(sp.contains("checkTag")){
-        //sp nge-dapetin dari data local hp (shared pref)
+        //sp nge-dapetin dari data local hp (shared pref) yang ada di filter
         if(sp.getString("checkTag","").equals("")){
             checkTag.clear();
             this.ui.setFilter("Filter : None");
