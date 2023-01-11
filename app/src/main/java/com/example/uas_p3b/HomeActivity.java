@@ -2,6 +2,7 @@ package com.example.uas_p3b;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.example.presenter.MainPresenter;
 import com.example.uas_p3b.databinding.ActivityMainBinding;
 import com.example.uas_p3b.databinding.HomeBinding;
 import com.example.uas_p3b.databinding.HomeFragmentBinding;
+
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements HomeUI {
     private HomeBinding binding;
@@ -74,8 +77,8 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
     @Override
     public void changePage(String page,Bundle bundle) {
         FragmentTransaction ft=this.getSupportFragmentManager().beginTransaction();
-        switch(page){
-            case "Home":
+        switch(page.toLowerCase()){
+            case "home":
                 ft.replace(binding.fragmentContainer.getId(), HomeFragment.newInstance(this));
                 ft.addToBackStack(null);
                 break;
@@ -84,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements HomeUI {
                 ft.addToBackStack(null);
                 break;
             case "frs":
-                if(role=="students"){
+                if(this.role.equals("student")){
                     ft.replace(binding.fragmentContainer.getId(), FRSFragment.newInstance(this));
                     ft.addToBackStack(null);
                     break;

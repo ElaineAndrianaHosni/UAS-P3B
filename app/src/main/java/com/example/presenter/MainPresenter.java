@@ -20,11 +20,15 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MainPresenter  {
     private MainUI ui;
     private Context context;
     private final static String  authURL = Config.BASE_URL + "authenticate";
     private Gson gson;
+    public final static String[] arrRole={"student","lecturer","admin"};
+
 
     public MainPresenter(MainUI ui) {
         this.ui = ui;
@@ -46,26 +50,26 @@ public class MainPresenter  {
                     public void onResponse(String response) {
                         memprosesKeluaranBerhasil(response);
                     }
-                    }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            memprosesKeluaranGagal(error);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }){
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        return json.getBytes();
-                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    memprosesKeluaranGagal(error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return json.getBytes();
+            }
 
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json";
-                    }
-                };
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
         queue.add(stringRequest);
     }
     private void memprosesKeluaranBerhasil(String respose){
@@ -76,7 +80,7 @@ public class MainPresenter  {
     }
     private void memprosesKeluaranGagal(VolleyError error) throws JSONException{
         String res="";
-                if(error instanceof NoConnectionError){
+        if(error instanceof NoConnectionError){
             res="Tidak ada koneksi internet";
         }else if(error instanceof TimeoutError){
             res="Server memakan waktu lama untuk merespon\nCoba Lagi!";
@@ -94,4 +98,3 @@ public class MainPresenter  {
         this.ui.loginGagal(res);
     }
 }
-

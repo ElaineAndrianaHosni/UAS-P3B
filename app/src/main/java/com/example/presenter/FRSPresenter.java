@@ -28,26 +28,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FRSPresenter {
-    //private LayoutFrsBinding frsBinding; presenter ga punya binding
     private FRSUI ui;
     private FRSAdapter adapterFRS;
+    //initial dapet waktu login
+    private String email;
     private int initial_year;
     private int active_year;
     private ArrayList<Integer> semester;
     private String announcementsURL;
-    private final static String academicYearURL = Config.BASE_URL + "academic-years";
-
-    private String email;
+    private final static String acdemicYearURL=Config.BASE_URL+"academic-years";
 
     public FRSPresenter (FRSUI ui){
         this.ui = ui;
         this.semester = new ArrayList<>();
-        MainActivity m = new MainActivity();
         this.email = ui.getEmail();
-        this.announcementsURL = Config.BASE_URL +"students/email"+ this.email;
+        this.announcementsURL = Config.BASE_URL+"students/email/" + this.email;
         callAPI(this.announcementsURL,"cariInitialYear");
+
     }
     public void callAPI(String BASE_URL,String ngapain){
+
 //        frsBinding.lstFrs.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_item_spinner,R.id.isi,new String[]{"Harap Tunggu..."}));
         RequestQueue queue = Volley.newRequestQueue(this.ui.getAct());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
@@ -78,7 +78,7 @@ public class FRSPresenter {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+ui.getToken());//ui ga pk this krn beda kelas, msknya ke string request
+                map.put("Authorization","Bearer "+ui.getToken());
                 return map;
             }
         };
@@ -95,12 +95,10 @@ public class FRSPresenter {
                 semester.add(masukan);
             }
         }
-        //ambil nilai active year dari api, trs d masukkin ke adapter
         ui.setActiveYear(active_year);
-        //buat update semester
         ui.updateList(semester);
-//        adapterFRS = new FRSAdapter(semester,ui.getAct(),active_year);
-//        frsBinding.lstFrs.setAdapter(adapterFRS); dikerjainnya di FRSFragment
+//        adapterFRS = new FRSAdapter(this);
+//        frsBinding.lstFrs.setAdapter(adapterFRS);
     }
     public void memprosesKeluaranGagal(VolleyError error) throws JSONException {
         String res = "";
@@ -118,6 +116,6 @@ public class FRSPresenter {
     }
     public void memprosesInitialYear(String response) throws JSONException {
         initial_year = new JSONObject(response).getInt("initial_year");
-        callAPI(this.academicYearURL,"cariTahun");
+        callAPI(this.acdemicYearURL,"cariTahun");
     }
 }
