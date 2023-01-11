@@ -3,6 +3,7 @@ package com.example.uas_p3b;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -181,6 +182,7 @@ public class TambahPertemuanFragment extends Fragment {
             Toast.makeText(getActivity(),"Server memakan waktu lama untuk merespon\nCoba Lagi!",Toast.LENGTH_LONG).show();
         }
         else{
+            Log.d("memprosesKeluaranGagal: ",new String(error.networkResponse.data));
             Toast.makeText(getActivity(),new String(error.networkResponse.data),Toast.LENGTH_LONG).show();
         }
 
