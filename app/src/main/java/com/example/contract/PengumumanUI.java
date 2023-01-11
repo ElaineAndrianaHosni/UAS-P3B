@@ -19,9 +19,11 @@ public interface PengumumanUI {
     //buat ambil judul pengumuman
     public String getTitle();
     public String getToken();
+    public String getRole();
     public void menampilkanError(String error);
     //ini metod kl gaada nextnya ya gaakan visible
     public void setVisibleBtnNext(boolean visible);
+    public void setVisibleBtnTambah(boolean visible);
     //nampilin loading
     public void loadingAdapter();
     //nampilin gaada data di adapter

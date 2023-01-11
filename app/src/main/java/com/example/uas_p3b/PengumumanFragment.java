@@ -2,6 +2,8 @@ package com.example.uas_p3b;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.adapter.PengumumanAdapter;
+import com.example.contract.HomeUI;
 import com.example.contract.PengumumanUI;
 import com.example.model.Pengumuman;
 import com.example.presenter.PengumumanPresenter;
@@ -26,14 +29,15 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
     private PengumumanBinding binding;
     private PengumumanAdapter adapter;
     private PengumumanPresenter presenter;
-    //token buat get apinya
-    private String token;
+    //get token dan role
+    private HomeUI homeUI;
 
-    public PengumumanFragment(String token) {
-        this.token = token;
+    public PengumumanFragment(HomeUI homeUI) {
+        this.homeUI = homeUI;
     }
-    public static PengumumanFragment newInstance(String token){
-        return new PengumumanFragment(token);
+
+    public static PengumumanFragment newInstance(HomeUI homeUI){
+        return new PengumumanFragment(homeUI);
     }
 
     @Nullable
@@ -47,6 +51,22 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
         binding.next.setOnClickListener(this);
         binding.filter.setOnClickListener(this);
         binding.btnTambah.setOnClickListener(this);
+        binding.searchTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.callAPI(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         return binding.getRoot();
 
@@ -83,7 +103,6 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
 
     @Override
     public void setFilter(String Filter) {
-        //ngerubah filter apply
         binding.filterApply.setText(Filter);
     }
 
@@ -94,7 +113,12 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
 
     @Override
     public String getToken() {
-        return token;
+        return homeUI.getToken();
+    }
+
+    @Override
+    public String getRole() {
+        return homeUI.getRole();
     }
 
     @Override
@@ -109,6 +133,16 @@ public class PengumumanFragment extends Fragment implements PengumumanUI, View.O
 
         }else{
             binding.next.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void setVisibleBtnTambah(boolean visible) {
+        if(visible){
+            binding.btnTambah.setVisibility(View.VISIBLE);
+
+        }else{
+            binding.btnTambah.setVisibility(View.INVISIBLE);
         }
     }
 
